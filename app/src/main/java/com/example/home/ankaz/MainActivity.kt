@@ -73,8 +73,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Agreement (dealN: String?){
-        val agreementIntent = Intent(this, AgreementActivity::class.java)
-        agreementIntent.putExtra(AgreementActivity.DEAL_NUM, dealN)
+        val agreementIntent = Intent(this, CardActivity::class.java)
+        agreementIntent.putExtra(CardActivity.DEAL_NUM, dealN)
         startActivity(agreementIntent)
     }
 

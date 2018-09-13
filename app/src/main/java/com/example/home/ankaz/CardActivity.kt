@@ -1,21 +1,29 @@
 package com.example.home.ankaz
 
-import android.content.Intent
 import android.os.AsyncTask
+import android.support.design.widget.TabLayout
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
-import com.example.home.ankaz.R
 import kotlinx.android.synthetic.main.activity_agreement.*
+
+import kotlinx.android.synthetic.main.activity_card.*
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.sql.Connection
-import android.widget.TextView
 
-
-
-class AgreementActivity : AppCompatActivity() {
+class CardActivity : AppCompatActivity() {
 
     companion object {
         const val DEAL_NUM = "0"
@@ -26,13 +34,40 @@ class AgreementActivity : AppCompatActivity() {
     private var connectionClass: Conn? = null //Connection Class Variable
     var dealN: String? = null
 
+    /**
+     * The [android.support.v4.view.PagerAdapter] that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * [android.support.v4.app.FragmentStatePagerAdapter].
+     */
+    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_agreement)
-        dealN = intent.getStringExtra(DEAL_NUM)
+        setContentView(R.layout.activity_card)
+
+        setSupportActionBar(toolbar)
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+
+        // Set up the ViewPager with the sections adapter.
+        container.adapter = mSectionsPagerAdapter
+
+        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
+
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        }
+
+        dealN = intent.getStringExtra(AgreementActivity.DEAL_NUM)
         //Subj_name.setText(dealN)
         loadData().execute()
-        //fill()
+
     }
 
     private fun setText(text: TextView, value: String) {
@@ -40,11 +75,6 @@ class AgreementActivity : AppCompatActivity() {
             text.text = value
             //Subj_name.setText(value)
         }
-    }
-
-    fun Home (view: View){
-        val agreementIntent = Intent(this, CardActivity::class.java)
-        startActivity(agreementIntent)
     }
 
     inner class loadData : AsyncTask<String, String, String>() {
@@ -109,10 +139,67 @@ class AgreementActivity : AppCompatActivity() {
         override fun onPostExecute(msg: String) // disimissing progress dialoge, showing error and setting up my listview
         {
             if (success!!) {
-                Toast.makeText(this@AgreementActivity, msg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CardActivity, msg, Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this@AgreementActivity, msg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CardActivity, msg, Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_card, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item.itemId
+
+        if (id == R.id.action_settings) {
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    /**
+     * A [FragmentPagerAdapter] that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment? {
+            when(position){
+                0 -> {
+                    return HomeActivity()
+                }
+                1 -> {
+                    return PointsActivity()
+                }
+                2 -> {
+                    return TrafficActivity()
+                }
+                else -> return null
+            }
+        }
+
+        override fun getCount(): Int {
+            // Show 3 total pages.
+            return 3
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            when(position){
+                0 ->  return "Home"
+                1 ->  return "Points"
+                2 ->  return "Traffic"
+            }
+            return null
         }
     }
 }
