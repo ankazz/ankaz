@@ -15,9 +15,6 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import android.content.Intent
 import android.widget.*
-import com.example.home.ankaz.AgreementActivity
-import com.example.home.ankaz.addOnItemClickListener
-import java.sql.Connection
 
 
 class MainActivity : AppCompatActivity() {
@@ -73,8 +70,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Agreement (dealN: String?){
-        val agreementIntent = Intent(this, CardActivity::class.java)
-        agreementIntent.putExtra(CardActivity.DEAL_NUM, dealN)
+        val agreementIntent = Intent(this, AgreementActivity::class.java)
+        agreementIntent.putExtra(AgreementActivity.DEAL_NUM, dealN)
         startActivity(agreementIntent)
     }
 

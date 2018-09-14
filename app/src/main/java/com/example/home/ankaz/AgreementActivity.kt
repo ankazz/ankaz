@@ -1,19 +1,27 @@
 package com.example.home.ankaz
 
-import android.content.Intent
+import android.content.Context
 import android.os.AsyncTask
+import android.support.design.widget.TabLayout
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.view.View
+import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.*
+import android.widget.TextView
 import android.widget.Toast
-import com.example.home.ankaz.R
-import kotlinx.android.synthetic.main.activity_agreement.*
+
+import kotlinx.android.synthetic.main.activity_card.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_points.*
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.sql.Connection
-import android.widget.TextView
-
-
 
 class AgreementActivity : AppCompatActivity() {
 
@@ -21,18 +29,62 @@ class AgreementActivity : AppCompatActivity() {
         const val DEAL_NUM = "0"
     }
 
+    lateinit var mRecyclerView: RecyclerView
     private var itemArrayList: ArrayList<Deal>? = null  //List items Array
+    private var myAppAdapter: MyAppAdapter? = null //Array Adapter
+
     private var success = false // boolean
     private var connectionClass: Conn? = null //Connection Class Variable
     var dealN: String? = null
 
+    /**
+     * The [android.support.v4.view.PagerAdapter] that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * [android.support.v4.app.FragmentStatePagerAdapter].
+     */
+    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_agreement)
-        dealN = intent.getStringExtra(DEAL_NUM)
+        setContentView(R.layout.activity_card)
+
+
+        itemArrayList = ArrayList() // Arraylist Initialization
+
+
+        mRecyclerView.addOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                var dealNumer = itemArrayList!!.get(position).deal_num
+                //Toast.makeText(this@MainActivity, dealNumer + " was clicked!", Toast.LENGTH_SHORT).show()
+                //Agreement(dealNumer)
+            }
+        })
+
+        container.setOffscreenPageLimit(3);
+
+        setSupportActionBar(toolbar)
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+
+        // Set up the ViewPager with the sections adapter.
+        container.adapter = mSectionsPagerAdapter
+
+        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
+
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        }
+
+        dealN = intent.getStringExtra(AgreementActivity.DEAL_NUM)
         //Subj_name.setText(dealN)
         loadData().execute()
-        //fill()
+
     }
 
     private fun setText(text: TextView, value: String) {
@@ -40,11 +92,6 @@ class AgreementActivity : AppCompatActivity() {
             text.text = value
             //Subj_name.setText(value)
         }
-    }
-
-    fun Home (view: View){
-        val agreementIntent = Intent(this, CardActivity::class.java)
-        startActivity(agreementIntent)
     }
 
     inner class loadData : AsyncTask<String, String, String>() {
@@ -113,6 +160,178 @@ class AgreementActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this@AgreementActivity, msg, Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+
+
+    //Запрос для ТУ
+    private inner class SyncData : AsyncTask<String, String, String>() {
+        internal var msg = "Internet/DB_Credentials/Windows_FireWall_TurnOn Error, See Android Monitor in the bottom For details!"
+        //internal var progress: ProgressDialog
+
+        override fun onPreExecute() //Starts the progress dailog
+        {
+            //progress = ProgressDialog.show(this@MainActivity, "Synchronising","RecyclerView Loading! Please Wait...", true)
+        }
+
+        override fun doInBackground(vararg strings: String)  // Connect to the database, write query and add items to array list
+                : String {
+            try {
+                itemArrayList?.clear()
+
+                var conn = Conn()
+                var con = conn.connectionclass()
+                if (con == null) {
+                    success = false
+                } else {
+                    // Change below query according to your own database.
+                    val query = "SELECT * FROM esPoints WHERE deal_num = '"+dealN+"'"
+                    val stmt = con.createStatement()
+                    val rs = stmt.executeQuery(query)
+                    if (rs != null)
+                    {
+                        while (rs!!.next()) {
+                            try {
+                                itemArrayList?.add(Deal(rs!!.getString("deal_num"), rs!!.getString("Street_Name"), rs!!.getString("AssetModel_Name")))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                            }
+
+                        }
+                        msg = "Найдено"
+                        success = true
+                    } else {
+                        msg = "Данные не найдены!"
+                        success = false
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                val writer = StringWriter()
+                e.printStackTrace(PrintWriter(writer))
+                msg = writer.toString()
+                success = false
+            }
+
+            return msg
+        }
+
+        override fun onPostExecute(msg: String) // disimissing progress dialoge, showing error and setting up my listview
+        {
+            //progress.dismiss()
+            Toast.makeText(this@AgreementActivity, msg + "", Toast.LENGTH_SHORT).show()
+            if (success === false) {
+            } else {
+                try {
+                    myAppAdapter = MyAppAdapter(itemArrayList, this@AgreementActivity)
+                    mRecyclerView.setAdapter(myAppAdapter)
+                } catch (ex: Exception) {
+
+                }
+
+            }
+        }
+    }
+
+    // Constructor
+    inner class MyAppAdapter(private val values: ArrayList<Deal>?, var context: Context) : RecyclerView.Adapter<MyAppAdapter.ViewHolder>() {
+
+        inner class ViewHolder(var layout: View) : RecyclerView.ViewHolder(layout){
+            private var view: View = layout
+            // public image title and image url
+            var dealNum: TextView
+            var subjectName: TextView
+            var addressName: TextView
+
+            init {
+                dealNum = layout.findViewById<View>(R.id.dealNum) as TextView
+                subjectName = layout.findViewById<View>(R.id.subjectName) as TextView
+                addressName = layout.findViewById<View>(R.id.addressName) as TextView
+            }
+        }
+
+        // Create new views (invoked by the layout manager) and inflates
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAppAdapter.ViewHolder {
+            // create a new view
+            val inflater = LayoutInflater.from(parent.context)
+            val v = inflater.inflate(R.layout.list_content, parent, false)
+            return ViewHolder(v)
+        }
+
+        // Binding items to the view
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+            val Deal = values!![position]
+            holder.dealNum.setText(Deal.deal_num)
+            holder.subjectName.setText(Deal.subject_name)
+            holder.addressName.setText(Deal.address_name)
+
+            //Picasso.with(context).load("http://" + classListItems.getImg()).into(holder.imageView)
+        }
+
+        // get item count returns the list item count
+        override fun getItemCount(): Int {
+            return values!!.size
+        }
+
+    }
+    //Закрытие для ТУ
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_card, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item.itemId
+
+        if (id == R.id.action_settings) {
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    /**
+     * A [FragmentPagerAdapter] that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment? {
+            when(position){
+                0 -> {
+                    return HomeActivity()
+                }
+                1 -> {
+                    return PointsActivity()
+                }
+                2 -> {
+                    return TrafficActivity()
+                }
+                else -> return null
+            }
+        }
+
+        override fun getCount(): Int {
+            // Show 3 total pages.
+            return 3
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            when(position){
+                0 ->  return "Home"
+                1 ->  return "Points"
+                2 ->  return "Traffic"
+            }
+            return null
         }
     }
 }

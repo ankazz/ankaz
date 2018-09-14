@@ -25,10 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".AgreementActivity" />
         <activity
-            android:name=".CardActivity"
-            android:label="@string/title_activity_card"
+            android:name=".AgreementActivity"
+            android:label="@string/title_activity_agreement"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
