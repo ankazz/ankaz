@@ -10,8 +10,8 @@ import java.sql.SQLException
 class Conn (){
     @SuppressLint("NewApi")
     fun connectionclass(): Connection? {
-        val usernam = "energosystema"
-        val passwordd = "uebdR4Y82b"
+        val usernam = "******"
+        val passwordd = "*******"
         val Host = "aktobe.akteh.kz;" // provide the username
         val dbName = "billing"
 
