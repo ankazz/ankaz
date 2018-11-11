@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent_layout">
+
+    <TextView
+        android:id="@+id/Point_Name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textAlignment="viewStart"
+        android:paddingRight="5dp"
+        android:text="Точка учёта"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Point_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Point_Name_label"
+        android:layout_below="@+id/Point_Name_label"
+        android:text="Point_Name"
+        android:textAlignment="viewStart"
+        android:paddingBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/Address_Name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Point_Name"
+        android:layout_below="@+id/Point_Name"
+        android:textAlignment="viewStart"
+        android:text="Адрес объекта"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Address_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Address_Name_label"
+        android:layout_below="@+id/Address_Name_label"
+        android:text="Address_Name"
+        android:textAlignment="viewStart"
+        android:paddingBottom="10dp"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/Serial_Number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Address_Name"
+        android:layout_below="@+id/Address_Name"
+        android:textAlignment="viewStart"
+        android:text="Прибор учета"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Serial_Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Serial_Number_label"
+        android:layout_below="@+id/Serial_Number_label"
+        android:text="Serial_Number"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"
+        android:paddingBottom="5dp"
+        android:textSize="14sp" />
+
+</RelativeLayout>

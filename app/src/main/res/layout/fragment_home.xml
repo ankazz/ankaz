@@ -1,87 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AgreementActivity">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Найменование"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Subj_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Адрес объекта"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Subj_name" />
-
-    <TextView
-        android:id="@+id/Subj_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Номер договора"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Subj_address" />
+<TextView
+    android:id="@+id/Subj_deal_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="12dp"
+    android:textAlignment="viewStart"
+    android:paddingRight="5dp"
+    android:text="Номер договора"
+    android:textSize="10sp" />
 
     <TextView
         android:id="@+id/Subj_deal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:layout_below="@+id/Subj_deal_label"
+        android:layout_alignStart="@+id/Subj_deal_label"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button2"
+<TextView
+    android:id="@+id/Subj_name_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/Subj_deal"
+    android:layout_below="@+id/Subj_deal"
+    android:textAlignment="viewStart"
+    android:text="Получатель:"
+    android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Subj_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:onClick="Home"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_below="@+id/Subj_name_label"
+        android:layout_alignStart="@+id/Subj_name_label"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
+<TextView
+    android:id="@+id/Subj_address_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/Subj_name"
+    android:layout_below="@+id/Subj_name"
+    android:textAlignment="viewStart"
+    android:text="Адрес получателя:"
+    android:textSize="10sp"/>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/Subj_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Subj_address_label"
+        android:layout_alignStart="@+id/Subj_address_label"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/phone_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/Subj_address"
+    android:layout_below="@+id/Subj_address"
+    android:textAlignment="viewStart"
+    android:text="Телефоны:"
+    android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Subj_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone_label"
+        android:layout_alignStart="@+id/phone_label"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/mail_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/Subj_phone"
+    android:layout_below="@+id/Subj_phone"
+    android:textAlignment="viewStart"
+    android:text="Email:"
+    android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Subj_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mail_label"
+        android:layout_alignStart="@+id/mail_label"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/inn_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/Subj_mail"
+    android:layout_below="@+id/Subj_mail"
+    android:textAlignment="viewStart"
+    android:text="БИН/ИИН:"
+    android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Subj_inn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inn_label"
+        android:layout_alignStart="@+id/inn_label"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

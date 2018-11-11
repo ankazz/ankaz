@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="100">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="50">
+
+                <TextView
+                    android:id="@+id/Period_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="12dp"
+                    android:paddingRight="5dp"
+                    android:text="Месяц"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:id="@+id/StartBalance_Value_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/Period_Name"
+                    android:layout_below="@+id/Period_Name"
+                    android:paddingRight="5dp"
+                    android:text="Сальдо на начало"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/Consumption_Value_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/StartBalance_Value_label"
+                    android:layout_below="@+id/StartBalance_Value_label"
+                    android:paddingRight="5dp"
+                    android:text="Потребление"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/Debit_Value_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/Consumption_Value_label"
+                    android:layout_below="@+id/Consumption_Value_label"
+                    android:paddingRight="5dp"
+                    android:text="Начисление"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/Credit_Value_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/Debit_Value_label"
+                    android:layout_below="@+id/Debit_Value_label"
+                    android:paddingRight="5dp"
+                    android:text="Оплата"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/EndBalance_Value_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/Credit_Value_label"
+                    android:layout_below="@+id/Credit_Value_label"
+                    android:layout_marginBottom="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Сальдо на конец"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="50">
+
+                <TextView
+                    android:id="@+id/Period_Name_null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="12dp"
+                    android:paddingRight="5dp"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/StartBalance_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/Period_Name_null"
+                    android:layout_marginEnd="15dp"
+                    android:paddingRight="5dp"
+                    android:text="Сальдо на начало"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/Consumption_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/StartBalance_Value"
+                    android:layout_marginEnd="15dp"
+                    android:paddingRight="5dp"
+                    android:text="Потребление"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/Debit_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/Consumption_Value"
+                    android:layout_marginEnd="15dp"
+                    android:paddingRight="5dp"
+                    android:text="Начисление"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/Credit_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/Debit_Value"
+                    android:layout_marginEnd="15dp"
+                    android:paddingRight="5dp"
+                    android:text="Оплата"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/EndBalance_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/Credit_Value"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:paddingRight="5dp"
+                    android:text="Сальдо на конец"
+                    android:textAlignment="viewEnd"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+
+        </RelativeLayout>
+
+</LinearLayout>
+

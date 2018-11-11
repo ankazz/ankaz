@@ -9,6 +9,6 @@ import android.view.ViewGroup
 class TrafficActivity : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_traffic, container, false)
+        return inflater.inflate(R.layout.fragment_balances, container, false)
     }
 }

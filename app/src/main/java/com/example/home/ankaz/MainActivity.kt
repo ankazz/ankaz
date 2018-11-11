@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     // Change below query according to your own database.
                     val searchText = mSearchText.getText().toString().trim()
-                    val query = "SELECT TOP 10  deal_num,subject_name,address_name FROM deals WHERE deal_num LIKE '%"+searchText+"%'"
+                    val query = "SELECT TOP 10 * FROM esCard WHERE deal_num LIKE '%"+searchText+"%'"
                     val stmt = con.createStatement()
                     val rs = stmt.executeQuery(query)
                     if (rs != null)
@@ -158,8 +158,8 @@ class MainActivity : AppCompatActivity() {
             var addressName: TextView
 
             init {
-                dealNum = layout.findViewById<View>(R.id.dealNum) as TextView
-                subjectName = layout.findViewById<View>(R.id.subjectName) as TextView
+                dealNum = layout.findViewById<View>(R.id.Period_Name) as TextView
+                subjectName = layout.findViewById<View>(R.id.pointName) as TextView
                 addressName = layout.findViewById<View>(R.id.addressName) as TextView
             }
         }

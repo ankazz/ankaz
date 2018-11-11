@@ -12,6 +12,7 @@ import android.os.AsyncTask
 import android.os.Build
 import android.text.TextUtils
 import android.view.View
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -23,36 +24,53 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val prefer = Prefer(this)
+        val editLogin: TextView = findViewById(R.id.username) as TextView
+        val editPassword: TextView = findViewById(R.id.password) as TextView
+
+        editLogin.text = prefer.loginToken
+        if (prefer.rememberToken){
+            editPassword.text =  prefer.passwordToken
+            rememberMe.isChecked =  prefer.rememberToken
+            checkLogin()
+        }
+
+        login.setOnClickListener(){
+            checkLogin()
+        }
     }
 
-    fun checkLogin(view: View){
+
+
+    fun checkLogin(){
 
         // Reset errors.
-        editLogin.error = null
-        editPassword.error = null
+        username.error = null
+        password.error = null
 
         // Store values at the time of the login attempt.
-        val loginStr = editLogin.text.toString()
-        val passwordStr = editPassword.text.toString()
+        val loginStr = username.text.toString()
+        val passwordStr = password.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            editPassword.error = getString(R.string.error_invalid_password)
-            focusView = editPassword
+            password.error = getString(R.string.error_invalid_password)
+            focusView = password
             cancel = true
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(loginStr)) {
-            editLogin.error = getString(R.string.error_field_required)
-            focusView = editLogin
+            username.error = getString(R.string.error_field_required)
+            focusView = username
             cancel = true
         } else if (!isLoginValid(loginStr)) {
-            editLogin.error = getString(R.string.error_invalid_email)
-            focusView = editLogin
+            username.error = getString(R.string.error_invalid_email)
+            focusView = username
             cancel = true
         }
 
@@ -73,6 +91,14 @@ class LoginActivity : AppCompatActivity() {
 
     fun mainPage(){
         if ( success  == true) {
+
+            val prefer = Prefer(this)
+            if (rememberMe.isChecked) {
+                prefer.loginToken = username.text.toString()
+                prefer.passwordToken = password.text.toString()
+            }
+            prefer.rememberToken = rememberMe.isChecked
+
             val randomIntent = Intent(this, MainActivity::class.java)
             startActivity(randomIntent)
         }
@@ -88,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
         //TODO: Replace this with your own logic
         return password.length > 3
     }
-
+/*
     private fun showProgress(show: Boolean) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -121,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
             login_progress.visibility = if (show) View.VISIBLE else View.GONE
             login_form.visibility = if (show) View.GONE else View.VISIBLE
         }
-    }
+    }*/
 
     //internal inner class AsyncRequest : AsyncTask<String, Int, String>() {
     inner class UserLoginTask internal constructor(private val mLogin: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
@@ -159,21 +185,19 @@ class LoginActivity : AppCompatActivity() {
 
         override fun onPostExecute(success: Boolean?) {
             mAuthTask = null
-            showProgress(false)
 
             if (success!!) {
                 Toast.makeText(this@LoginActivity, "Успешно", Toast.LENGTH_SHORT).show()
                 mainPage()
                 finish()
             } else {
-                editPassword.error = getString(R.string.error_incorrect_password)
-                editPassword.requestFocus()
+                password.error = getString(R.string.error_incorrect_password)
+                password.requestFocus()
             }
         }
 
         override fun onCancelled() {
             mAuthTask = null
-            showProgress(false)
 
         }
     }
